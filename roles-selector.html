@@ -1,0 +1,9 @@
+<md-input-container ng-if="vm.roles && vm.roles.length > 0" class="md-block ">
+    <label translate="common.field.{{vm.type}}_role"></label>
+    <md-select ng-model="vm.ngModel">
+        <md-option ng-value="null"><em translate="common.label.none"></em></md-option>
+        <md-option ng-repeat="role in vm.roles" ng-value="role">
+            <span translate="core.roles.{{vm.type}}.{{role}}"></span>
+        </md-option>
+    </md-select>
+</md-input-container>

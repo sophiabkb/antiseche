@@ -1,0 +1,7 @@
+<div class="art-progress-bar">
+    <div class="completed" ng-class="{'full': vm.value >= 100}" ng-style="vm.style">
+        <div class="text" ng-class="{'dark': vm.value === 0}">
+            <span ng-bind="vm.value"></span><span ng-bind="vm.append"></span>
+        </div>
+    </div>
+</div>

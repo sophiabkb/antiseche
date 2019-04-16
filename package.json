@@ -1,0 +1,43 @@
+{
+  "name": "antiseche-admin",
+  "version": "2.0.5",
+  "description": "Console d'administration d'Antiseche",
+  "author": "Artips",
+  "scripts": {
+    "postinstall": "./node_modules/bower/bin/bower install --allow-root"
+  },
+  "devDependencies": {
+    "bower": "1.7.9",
+    "del": "2.2.0",
+    "eslint": "^4.9.0",
+    "eslint-plugin-angular": "^3.1.1",
+    "filesize": "^3.3.0",
+    "fluent-ffmpeg": "^2.1.0",
+    "fs-extra": "^1.0.0",
+    "fs-readdir-promise": "^1.0.1",
+    "gulp": "3.9.1",
+    "gulp-check-unused-css": "2.1.3",
+    "gulp-cssnano": "2.1.1",
+    "gulp-exec": "^2.1.2",
+    "gulp-filter": "4.0.0",
+    "gulp-htmlmin": "1.3.0",
+    "gulp-if": "2.0.0",
+    "gulp-imagemin": "3.0.1",
+    "gulp-jsonminify": "^1.0.0",
+    "gulp-livereload": "3.8.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "0.5.4",
+    "gulp-rev": "7.0.0",
+    "gulp-rev-replace": "0.4.3",
+    "gulp-uglify": "1.5.3",
+    "gulp-useref": "3.0.8",
+    "image-size": "^0.5.0",
+    "json-keys-compare": "^0.1.0",
+    "json-mapper": "0.0.10",
+    "lodash": "^4.17.2",
+    "promise": "^7.1.1",
+    "q": "^1.4.1",
+    "readdir-recursive-promise": "0.0.1",
+    "tinify": "^1.3.0"
+  }
+}

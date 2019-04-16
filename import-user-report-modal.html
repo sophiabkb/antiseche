@@ -1,0 +1,56 @@
+<md-dialog aria-label="Report import user" style="    min-width: 600px;">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h1><span translate="{{vm.title}}"></span><strong ng-bind="vm.reportId"></strong></h1>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="vm.cancel()">
+                <md-icon aria-label="close" class="material-icons">
+                    close
+                </md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            <!-- Informations globales du rapport -->
+            <div layout="row">
+                <section flex="50">
+                    <h3>Général</h3>
+                    <p class="label-value"><span class="label">Fichier valide : </span><span class="value" ng-bind="vm.report.csvValid"></span></p>
+                    <p class="label-value"><span class="label">Durée d'exécution : </span><span class="value" ng-bind="vm.report.duration | duration"></span></p>
+                    <p class="label-value"><span class="label">Fini sans erreur : </span><span class="value" ng-bind="vm.report.finished"></span></p>
+                </section>
+                <section flex="50">
+                    <h3>Erreur</h3>
+                    <p ng-if="vm.report.error" class="error-text" ng-bind="vm.report.error.message"></p>
+                    <p ng-if="!vm.report.error">Pas d'erreurs</p>
+                </section>
+            </div>
+            <!--  -->
+            <div layout="row">
+                <section flex="50">
+                    <h3>Utilisateurs créés</h3>
+                    <ul class="reset-list">
+                        <li ng-repeat="user in vm.report.uCreated track by user">
+                            <span ng-bind="user"></span>
+                        </li>
+                    </ul>
+                </section>
+                <section flex="50">
+                    <h3>Utilisateurs NON créés</h3>
+                    <ul class="reset-list">
+                        <li ng-repeat="user in vm.report.uNotCreated track by user">
+                            <span ng-bind="user.email"></span><br>
+                            <small class="error-text" ng-bind="user.msg.data"></small>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+        <md-button ng-click="vm.cancel()" module="vm.module">
+            Fermer
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

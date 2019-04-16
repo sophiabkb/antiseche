@@ -1,0 +1,226 @@
+<section class="user-consult page">
+
+    <!-- Email + bouton supprimer utilisateur -->
+    <div layout="row" layout-align="space-between">
+        <div>
+            <h2>
+                <a ui-sref="admin.header.users.list" style="text-decoration: none;">
+                    <md-icon md-svg-icon="assets/img/icon/arrow-left-black.svg" class="md-36"></md-icon>
+                </a>
+                <span ng-bind="vm.user.infos.email"></span>
+            </h2>
+        </div>
+        <div>
+            <md-button ng-if="headerVm.allow.deleteUser && (vm.myUid !== vm.uid)" class="md-accent md-raised md-warn" ng-click="vm.deleteUser($event)" translate="user.consult.delete_btn"></md-button>
+        </div>
+    </div>
+    <!-- Affichage de l'identifiant de l'utilisateur-->
+    <div class="subtitle">
+        <span class="bold" ng-bind-html="'user.consult.id' | translate"></span><span ng-bind="vm.uid"></span>
+    </div>
+
+    <!-- Conteneur pour le profile, les statistiques de connexion et les statistiques globales -->
+    <div layout-gt-sm="row">
+        <div flex-gt-sm="50" flex="100">
+            <md-card class="no-margin-lt">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline" translate="user.consult.infos.title"></span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content layout="row">
+                    <!-- Affichage de l'avatar -->
+                    <div class="avatar-container">
+                        <img src="assets/img/profil/{{(vm.user.infos.sex || 'neutral')}}.png" alt="avatar">
+                    </div>
+                    <!-- Affichage des données de l'utilisateur -->
+                    <div class="infos-container" flex>
+                        <p class="label-value" ng-repeat="infoItem in vm.listInfoItems track by infoItem">
+                            <label class="label" translate="common.field.{{infoItem}}"></label>&nbsp;:&nbsp;<span class="analytic-value" ng-bind="vm.user.infos[infoItem]"></span>
+                        </p>
+                        <!-- Bouton pour suspendre un compte -->
+                        <p class="label-value" layout="row" layout-align="start center">
+                            <label class="label" translate="user.consult.infos.disabled"></label>&nbsp;:&nbsp;
+                            <md-switch ng-model="vm.user.infos.disabled" ng-change="vm.disableUser()" class="md-warn disable-switch" ng-disabled="vm.myUid === vm.uid"></md-switch>
+                        </p>
+                        <!-- Affichage des rôles editeur -->
+                        <p ng-if="::vm.user.editorRoles.length > 0" class="label-value">
+                            <label class="label" translate="common.field.editor_role"></label>&nbsp;:&nbsp;
+                            <span ng-repeat="role in ::vm.user.editorRoles track by $index">
+                                <span translate="core.roles.editor.{{::role}}"></span>
+                                <span ng-if="!$last">, </span>
+                            </span>
+                        </p>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </div>
+        <div flex-gt-sm="50" flex="100">
+            <md-card class="no-margin-lt">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline" translate="user.consult.sessions_analytics.title"></span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content >
+                    <!-- Nombre de connexions -->
+                    <p class="label-value">
+                        <label class="label" translate="user.consult.sessions_analytics.count"></label>&nbsp;:&nbsp;<span class="analytic-value" ng-bind="vm.sessions.length || 0"></span>
+                    </p>
+                    <!-- Dernière connexion -->
+                    <p class="label-value">
+                        <label class="label" translate="user.consult.sessions_analytics.last"></label>&nbsp;:&nbsp;
+                        <span class="analytic-value" ng-bind="vm.lastSession.startDate | date:'short'"></span>
+                    </p>
+                    <!-- Total  -->
+                    <p class="label-value">
+                        <label class="label" translate="user.consult.sessions_analytics.duration"></label>&nbsp;:&nbsp;<span class="analytic-value" ng-bind="vm.sessionsDuration | duration:'d \'jour(s)\' hh:mm:ss'"></span>
+                    </p>
+                </md-card-content>
+            </md-card>
+            <md-card class="no-margin-lt">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline" translate="user.consult.global_statistics.title"></span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content >
+                    <div layout="row">
+                        <!-- Gauge résultats aux quiz -->
+                        <div class="gauge-container" flex="50">
+                            <div class="text-center">
+                                <ng-gauge size="{{vm.gaugeStyle.size}}" type="{{vm.gaugeStyle.type}}" thick="{{vm.gaugeStyle.thick}}"
+                                          cap="{{vm.gaugeStyle.cap}}" foreground-color="{{vm.gaugeStyle.foregroundGreen}}" background-color="{{vm.gaugeStyle.backgroundColor}}"
+                                          append="%" counter="true" value="vm.resultQuiz || 0"></ng-gauge>
+                                <p class="caption" translate="user.consult.global_statistics.good_answer"></p>
+                            </div>
+                        </div>
+                        <!-- Gauge avancement -->
+                        <div class="gauge-container" flex="50">
+                            <div class="text-center">
+                                <ng-gauge size="{{vm.gaugeStyle.size}}" type="{{vm.gaugeStyle.type}}" thick="{{vm.gaugeStyle.thick}}"
+                                          cap="{{vm.gaugeStyle.cap}}" foreground-color="{{vm.gaugeStyle.foregroundYellow}}" background-color="{{vm.gaugeStyle.backgroundColor}}"
+                                          append="%" counter="true" value="vm.progressionTotal || 0" ></ng-gauge>
+                                <p class="caption" translate="user.consult.global_statistics.progression"></p>
+                            </div>
+                        </div>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </div>
+    </div>
+
+
+    <!-- Liste des modules -->
+    <div style="margin-bottom: 30px;">
+        <h3 translate="user.consult.list_course.title"></h3>
+        <md-card class="no-margin-lt">
+            <div ui-grid="vm.gridOptions" class="users-grid" ui-grid-resize-columns ng-style="adminVm.gridHeight(vm.gridOptions)">
+                <div class="loader-container" ng-hide="!vm.loadingData" >
+                    <md-progress-circular class="md-primary" md-mode="indeterminate"></md-progress-circular>
+                </div>
+            </div>
+        </md-card>
+    </div>
+
+    <!-- Détail d'un module -->
+    <div id="course-detail" ng-show="vm.selectedCourse" class="slide-up-down large">
+        <h3 translate="user.consult.course_detail.title" translate-values="{course: vm.selectedCourse}"></h3>
+        <div layout-gt-sm="row">
+            <!-- Infos globales -->
+            <md-card class="no-margin-lt no-margin-tp" flex-gt-sm="25" flex="100">
+                <!-- FIX: Div qui ne "sert à rien" mais corrige l'affichage -->
+                <div >
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline" translate="user.consult.course_detail.title_infos"></span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                        <!-- Date de début -->
+                        <p class="label-value">
+                            <label class="label" translate="common.label.startDate"></label>&nbsp;:&nbsp;<span class="analytic-value" ng-bind="vm.selectedCourseAnalytics.startDate | date:'short'"></span>
+                        </p>
+                        <!-- Temps passé -->
+                        <p class="label-value">
+                            <label class="label" translate="user.consult.sessions_analytics.duration"></label>&nbsp;:&nbsp;<span class="analytic-value" ng-bind="vm.selectedCourseAnalytics.duration | duration:'d \'jour(s)\' hh:mm:ss'"></span>
+                        </p>
+                        <!-- Langue -->
+                        <p class="label-value">
+                            <label class="label" translate="common.field.lang"></label>&nbsp;:&nbsp;<span class="analytic-value capitalize" ng-bind="vm.selectedCourseAnalytics.lang"></span>
+                        </p>
+                    </md-card-content>
+                </div>
+            </md-card>
+
+
+            <!-- Infos sur les envoi de mails -->
+            <md-card class="no-margin-lt no-margin-tp" flex-gt-sm="25" flex="100">
+                <!-- FIX: Div qui ne "sert à rien" mais corrige l'affichage -->
+                <div>
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline" translate="user.consult.course_detail.email_title"></span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                        <p class="label-value">
+                            <label class="label" translate="user.consult.course_detail.sendDays"></label>&nbsp;:&nbsp;
+                            <span class="analytic-value" ng-repeat="day in vm.selectedCourseAnalytics.mailing.days track by $index">
+                                <span translate="common.days.{{day}}"></span>
+                                <span ng-if="!$last">, </span>
+                            </span>
+                        </p>
+                        <p class="label-value">
+                            <label class="label" translate="user.consult.course_detail.sendHour"></label>&nbsp;:&nbsp;
+                            <span ng-if="vm.selectedCourseAnalytics.mailing.hour" class="analytic-value" ng-bind="vm.selectedCourseAnalytics.mailing.hour + 'h'"></span>
+                        </p>
+                    </md-card-content>
+                </div>
+            </md-card>
+            <!-- Graphiques sur le module -->
+            <md-card class="no-margin-lt no-margin-tp" flex-gt-sm="50" flex="100">
+                <!-- FIX: Div qui ne "sert à rien" mais corrige l'affichage -->
+                <div>
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline" translate="user.consult.global_statistics.title"></span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content >
+                        <div layout-gt-xs="row">
+                            <!-- Gauge résultats aux quiz -->
+                            <div class="gauge-container" flex="100" flex-gt-sm="50">
+                                <div class="text-center">
+                                    <ng-gauge size="{{vm.gaugeStyle.size}}" type="{{vm.gaugeStyle.type}}" thick="{{vm.gaugeStyle.thick}}"
+                                              cap="{{vm.gaugeStyle.cap}}" foreground-color="{{vm.gaugeStyle.foregroundGreen}}" background-color="{{vm.gaugeStyle.backgroundColor}}"
+                                              append="%" counter="true" value="vm.selectedCourseAnalytics.quizScore || 0"></ng-gauge>
+                                    <p class="caption" translate="user.consult.global_statistics.good_answer"></p>
+                                </div>
+                            </div>
+                            <!-- Trie des feedbacks -->
+                            <!-- Non parrainés -->
+                            <div ng-if="vm.selectedCourseAnalytics.feedGraph" flex="100" flex-gt-sm="50" layout="row">
+                                <figure class="chart-doughnut-container" flex>
+                                    <div class="chart-doughnut-content">
+                                        <canvas id="doughnut-feedback" class="chart chart-doughnut" height="110"
+                                                chart-data="vm.selectedCourseAnalytics.feedGraph.data" chart-labels="vm.selectedCourseAnalytics.feedGraph.labels"
+                                                chart-options="vm.selectedCourseAnalytics.feedGraph.options" chart-colors="vm.selectedCourseAnalytics.feedGraph.colors">
+                                        </canvas>
+                                    </div>
+                                    <figcaption class="caption" translate="user.consult.global_statistics.feedback"></figcaption>
+                                </figure>
+                                <div class="legend">
+                                    <p ng-repeat="item in vm.selectedCourseAnalytics.feedGraph.legend">
+                                        <span class="color-box" ng-style="{'background-color': item.color}"></span>
+                                        <span class="text" translate="{{item.label}}"></span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </md-card-content>
+                </div>
+            </md-card>
+        </div>
+    </div>
+</section>

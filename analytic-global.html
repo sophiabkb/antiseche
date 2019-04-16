@@ -1,0 +1,198 @@
+<section class="analytic page">
+    <h2 translate="analytic.title"></h2>
+
+    <div layout-gt-sm="row" layout-align="start start">
+        <!-- Sélection des dates pour les analytics -->
+        <art-analytic-selector group-list="vm.groupList" updat-fn="vm.updateAnalytic()" export-sessions-csv-fn="vm.exportSessionsCSV(group, dateFrom, dateTo)" export-modules-csv-fn="vm.exportModulesCSV(group, dateFrom, dateTo)"></art-analytic-selector>
+
+        <md-card flex>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline" translate="analytic.global.title"></span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <div layout="row">
+                    <div flex="50">
+                        <p class="label-value"><label class="label" translate="analytic.global.nb_unsponsorised_users"></label> : <span ng-bind="vm.users.unsponsorised"></span></p>
+                        <p class="label-value"><label class="label" translate="analytic.global.nb_sponsorised_users"></label> : <span ng-bind="vm.users.sponsorised"></span></p>
+                        <p class="label-value"><label class="label" translate="analytic.global.completion"></label> : <span ng-bind="vm.totalCompletionRate | number:2"></span><span>%</span></p>
+                        <p class="label-value"><label class="label" translate="analytic.global.completion_sponsorized"></label> : <span ng-bind="vm.totalCompletionRateSponsorized | number:2"></span><span>%</span></p>
+                    </div>
+                    <div flex="50" class="v-align">
+                        <p class="label-value align-center" style="margin: auto;">
+                            <label class="label" translate="analytic.global.final_score"></label><br>
+                            <span class="final-score">{{vm.scoreTotal}}/30</span>
+                            <br><br>
+                            <label class="label" translate="analytic.global.final_score_sponsorized"></label><br>
+                            <span class="final-score">{{vm.scoreTotalSponsorized}}/30</span>
+                        </p><br>
+                    </div>
+                </div>
+                <!--<div class="global-charts" layout="row">
+                    <figure flex="50" class="chart-pie-container">
+                        <div class="chart-pie-content">
+                            <canvas id="courses-type" class="chart chart-pie"
+                                    chart-data="vm.coursesChart.data" chart-labels="vm.coursesChart.labels">
+                            </canvas>
+                        </div>
+                        <figcaption class="align-center" translate="analytic.global.course_graph_caption"></figcaption>[TODO]
+                    </figure>
+                    <figure  flex="50" class="chart-doughnut-container">
+                        <div class="chart-doughnut-content">
+                            <canvas id="lessont-type" class="chart chart-doughnut"
+                                    chart-data="vm.lessonChart.data" chart-labels="vm.lessonChart.labels" chart-colors="vm.lessonChart.colors" chart-options="vm.lessonChart.options">
+                            </canvas>
+                        </div>
+                        <figcaption class="align-center" translate="analytic.global.lesson_graph_caption"></figcaption>[TODO]
+                    </figure>
+                </div>-->
+
+            </md-card-content>
+        </md-card>
+    </div>
+
+    <!-- Création de comptes -->
+    <!--<div layout-gt-sm="row">
+        &lt;!&ndash; Cisco &ndash;&gt;
+        <div flex="50" flex-sm="100">
+            <art-bar-chart chart-id="count-creation" title="analytic.count_creation.title" caption="analytic.count_creation.caption" height="300" data="vm.countCreation"></art-bar-chart>
+        </div>
+        &lt;!&ndash; Sponsorisé &ndash;&gt;
+        <div flex="50" flex-sm="100">
+            <art-bar-chart chart-id="count-creation-sponsorized" title="analytic.count_creation_sponsorised.title" caption="analytic.count_creation_sponsorised.caption" height="300" data="vm.countCreationSponsorized"></art-bar-chart>
+        </div>
+    </div>-->
+
+    <!-- Durée et nombre de connexion -->
+    <!--<div layout-gt-sm="row">
+        &lt;!&ndash; Nombre de connexion &ndash;&gt;
+        <div flex="50" flex-sm="100">
+            <art-bar-chart chart-id="count-connection" title="analytic.count_connection.title" caption="analytic.count_connection.caption" height="300" data="vm.countConnection"></art-bar-chart>
+        </div>
+        &lt;!&ndash; Nombre de connexion &ndash;&gt;
+        <div flex="50" flex-sm="100">
+            <art-bar-chart chart-id="count-connection-sponsorized" title="analytic.count_connection_sponsorised.title" caption="analytic.count_connection_sponsorised.caption" height="300" data="vm.countConnectionSponsorized"></art-bar-chart>
+        </div>
+    </div>-->
+
+    <!-- Durée et nombre de connexion -->
+    <!--<div layout-gt-sm="row">
+        &lt;!&ndash; Durée de connexion &ndash;&gt;
+        <div flex="50" flex-sm="100">
+            <art-bar-chart chart-id="duration-connection" title="analytic.time_connection.title" caption="analytic.time_connection.caption" height="300" data="vm.timeConnection"></art-bar-chart>
+        </div>
+        &lt;!&ndash; Durée de connexion &ndash;&gt;
+        <div flex="50" flex-sm="100">
+            <art-bar-chart chart-id="duration-connection-sponsorized" title="analytic.time_connection_sponsorised.title" caption="analytic.time_connection_sponsorised.caption" height="300" data="vm.timeConnectionSponsorized"></art-bar-chart>
+        </div>
+    </div>-->
+
+    <!-- Modules commencés -->
+   <!-- <div layout-gt-sm="row">
+        &lt;!&ndash; Modules commencés par semaine CE Cisco &ndash;&gt;
+        <div flex="50" flex-sm="100">
+            <art-bar-chart chart-id="course-by-user" title="analytic.course_by_user.title" caption="analytic.course_by_user.caption" height="300" data="vm.courseByUser"></art-bar-chart>
+        </div>
+        &lt;!&ndash; Modules commencés par semaine parrainés &ndash;&gt;
+        <div flex="50" flex-sm="100">
+            <art-bar-chart chart-id="course-by-user-sponsorized" title="analytic.course_by_user_sponsorized.title" caption="analytic.course_by_user_sponsorized.caption" height="300" data="vm.courseByUserSponsorized"></art-bar-chart>
+        </div>
+    </div>
+    &lt;!&ndash; Modules commencés &ndash;&gt;
+    <div layout-gt-sm="row">
+        &lt;!&ndash; Modules commencés depuis le début CE Cisco &ndash;&gt;
+        <div flex="50" flex-sm="100">
+            <art-bar-chart chart-id="course-total" title="analytic.course_total.title" caption="analytic.course_total.caption" height="300" data="vm.courseTotal"></art-bar-chart>
+        </div>
+        &lt;!&ndash; Modules commencés depuis le début parrainés&ndash;&gt;
+        <div flex="50" flex-sm="100">
+            <art-bar-chart chart-id="course-total-sponsorized" title="analytic.course_total_sponsorized.title" caption="analytic.course_total_sponsorized.caption" height="300" data="vm.courseTotalSponsorized"></art-bar-chart>
+        </div>
+    </div>-->
+
+    <!-- Répartition des modules -->
+    <div layout-gt-sm="row">
+        <!-- Nombre de connexion -->
+        <div flex="50" flex-sm="100">
+            <art-pie-chart chart-id="course-unsponsorised" title="analytic.type_course_unsponsorised.title" caption="analytic.type_course_unsponsorised.caption" height="300" data="vm.courseUnsponsorised"></art-pie-chart>
+        </div>
+        <!-- Durée de connexion -->
+        <div flex="50" flex-sm="100">
+            <art-pie-chart chart-id="course-sponsorised" title="analytic.type_course_sponsorised.title" caption="analytic.type_course_sponsorised.caption" height="300" data="vm.courseSponsorised"></art-pie-chart>
+        </div>
+    </div>
+
+    <!-- Répartition des jours d'envoies -->
+    <div layout-gt-sm="row">
+        <!-- Jours d'envoi non sponsorisé -->
+        <div flex="50" flex-sm="100">
+            <art-pie-chart chart-id="days-unsponsorised" title="analytic.days_unsponsorised.title" caption="analytic.days_unsponsorised.caption" height="300" data="vm.daysUnsponsorised"></art-pie-chart>
+        </div>
+        <!-- Jours d'envoi parrainées -->
+        <div flex="50" flex-sm="100">
+            <art-pie-chart chart-id="days-sponsorised" title="analytic.days_sponsorised.title" caption="analytic.days_sponsorised.caption" height="300" data="vm.daysSponsorised"></art-pie-chart>
+        </div>
+    </div>
+
+    <!-- Répartition des heures d'envoies -->
+    <div layout-gt-sm="row">
+        <!-- Heures d'envoi non sponsorisé -->
+        <div flex="50" flex-sm="100">
+            <art-pie-chart chart-id="hours-unsponsorised" title="analytic.hours_unsponsorised.title" caption="analytic.hours_unsponsorised.caption" height="300" data="vm.hoursUnsponsorised"></art-pie-chart>
+        </div>
+        <!-- Heure d'envoi parrainée  -->
+        <div flex="50" flex-sm="100">
+            <art-pie-chart chart-id="hours-sponsorised" title="analytic.hours_sponsorised.title" caption="analytic.hours_sponsorised.caption" height="300" data="vm.hoursSponsorised"></art-pie-chart>
+        </div>
+    </div>
+
+    <!-- Répartition des device -->
+    <!--<div layout-gt-sm="row">
+        &lt;!&ndash; Non parrainés &ndash;&gt;
+        <div flex="50" flex-sm="100">
+            <art-pie-chart chart-id="device" title="analytic.device.title" caption="analytic.device.caption" height="300" data="vm.device"></art-pie-chart>
+        </div>
+        &lt;!&ndash; Parrainés  &ndash;&gt;
+        <div flex="50" flex-sm="100">
+            <art-pie-chart chart-id="device-sponsorised" title="analytic.device_sponsorised.title" caption="analytic.device_sponsorised.caption" height="300" data="vm.deviceSponsorised"></art-pie-chart>
+        </div>
+    </div>-->
+
+    <!-- Complétion par module -->
+    <div layout-gt-sm="row">
+        <!-- Non parrainés -->
+        <div flex="50" flex-sm="100">
+            <art-bar-chart chart-id="completion" title="analytic.completion.title" caption="analytic.completion.caption" height="300" data="vm.completion" options="vm.completionOpt"></art-bar-chart>
+        </div>
+        <!-- Parrainés  -->
+        <div flex="50" flex-sm="100">
+            <art-bar-chart chart-id="completion-sponsorised" title="analytic.completion_sponsorised.title" caption="analytic.completion_sponsorised.caption" height="300" data="vm.completionSponsorized" options="vm.completionOpt"></art-bar-chart>
+        </div>
+    </div>
+
+    <!-- Tri des leçons -->
+    <div layout-gt-sm="row">
+        <!-- Non parrainés -->
+        <div flex="50" flex-sm="100">
+            <art-doughnut-chart chart-id="feedback" title="analytic.feedback.title" caption="analytic.feedback.caption" height="300" data="vm.feedback" options="vm.feedbackOpt"></art-doughnut-chart>
+        </div>
+        <!-- Parrainés  -->
+        <div flex="50" flex-sm="100">
+            <art-doughnut-chart chart-id="feedback-sponsorised" title="analytic.feedback_sponsorised.title" caption="analytic.feedback_sponsorised.caption" height="300" data="vm.feedbackSponsorized" options="vm.feedbackOpt"></art-doughnut-chart>
+        </div>
+    </div>
+
+    <!-- Note -->
+    <div layout-gt-sm="row">
+        <!-- Non parrainés -->
+        <div flex="50" flex-sm="100">
+            <art-bar-chart chart-id="score" title="analytic.score.title" caption="analytic.score.caption" height="300" data="vm.score" options="vm.scoreOpt"></art-bar-chart>
+        </div>
+        <!-- Parrainés  -->
+        <div flex="50" flex-sm="100">
+            <art-bar-chart chart-id="score-sponsorised" title="analytic.score_sponsorised.title" caption="analytic.score_sponsorised.caption" height="300" data="vm.scoreSponsorized" options="vm.scoreOpt"></art-bar-chart>
+        </div>
+    </div>
+
+</section>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html ng-app="artips.admin" ng-strict-di ng-controller="AdminCtrl as adminVm">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="UTF-8"/>
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0,   user-scalable=0" name="viewport">
+        <base href="/">
+
+        <title translate="core.title">Antisèche Admin</title>
+        <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+
+
+        <!-- Cabin Font -->
+        <link href="https://fonts.googleapis.com/css?family=Cabin:400,500,700" rel="stylesheet">
+
+        <!-- Vendor css-->
+        <link rel="stylesheet" href="vendor/angular-material/angular-material.min.css">
+        <link rel="stylesheet" href="vendor/angular-ui-grid/ui-grid.min.css">
+
+
+        <!-- Own css-->
+        <link rel="stylesheet" href="assets/styles/font.css">
+        <link rel="stylesheet" href="assets/styles/admin.css">
+    </head>
+    <body>
+
+        <div ui-view style="height: 100%"></div>
+
+
+
+        <!-- Correction d'un  bug sur safair en navigation privée -->
+        <script src="app/common/src/core/shim.js"></script>
+        <!-- ************ -->
+        <!-- LIB EXTERNES -->
+        <!-- ************ -->
+        <!-- Angular & dependencies -->
+        <script src="vendor/angular/angular.min.js"></script>
+        <script src="vendor/angular-sanitize/angular-sanitize.min.js"></script>
+        <script src="vendor/angular-aria/angular-aria.min.js"></script>
+        <script src="vendor/angular-messages/angular-messages.min.js"></script>
+        <script src="vendor/angular-animate/angular-animate.min.js"></script>
+        <script src="vendor/angular-cookies/angular-cookies.min.js"></script>
+        <!-- ui-grid -->
+        <script src="vendor/angular-ui-grid/ui-grid.min.js"></script>
+        <!-- ui-router -->
+        <script src="vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
+        <!-- firebase -->
+        <script src="vendor/firebase/firebase.js"></script>
+        <script src="vendor/angularfire/dist/angularfire.min.js"></script>
+        <!-- Angular translate -->
+        <script src="vendor/angular-translate/angular-translate.min.js"></script>
+        <script src="vendor/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+        <script src="vendor/angular-translate-loader-partial/angular-translate-loader-partial.min.js"></script>
+        <!-- Chargement i18n -->
+        <script src="vendor/angular-dynamic-locale/dist/tmhDynamicLocale.min.js"></script>
+        <!-- Lodash -->
+        <script src="vendor/lodash/dist/lodash.min.js"></script>
+        <script src="vendor/ng-lodash/build/ng-lodash.min.js"></script>
+        <!-- google chart -->
+        <script src="vendor/chart.js/dist/Chart.min.js"></script>
+        <script src="vendor/angular-chart.js/dist/angular-chart.min.js"></script>
+        <!-- Gauge -->
+        <script src="vendor/angularjs-gauge/src/angularjs-gauge.js"></script>
+        <!-- Upload de fichiers -->
+        <script src="vendor/ng-file-upload/ng-file-upload.min.js"></script>
+        <!-- Angular Material requires Angular.js Libraries : animate, aria and messages (voir plus haut) -->
+        <script src="vendor/angular-material/angular-material.min.js"></script>
+
+
+
+        <!-- ****************** -->
+        <!-- APPLICATION COMMON -->
+        <!-- ****************** -->
+        <script src="resources/env.js"></script>
+        <script src="/api/v1/config/server-env.js"></script>
+
+        <!-- Import du common.core -->
+        <script src="app/common/src/core/core.js"></script>
+        <script src="app/common/src/core/core.config.js"></script>
+        <script src="app/common/src/core/core.constant.js"></script>
+        <script src="app/common/src/core/core.run.js"></script>
+        <script src="app/common/src/core/decorator/q.decorator.js"></script>
+        <script src="app/common/src/core/data-access/config.da.js"></script>
+        <script src="app/common/src/core/data-access/user.da.js"></script>
+        <script src="app/common/src/core/service/auth.service.js"></script>
+        <script src="app/common/src/core/service/config.service.js"></script>
+        <script src="app/common/src/core/service/env.service.js"></script>
+        <script src="app/common/src/core/service/firebase.service.js"></script>
+        <script src="app/common/src/core/service/lang.service.js"></script>
+        <script src="app/common/src/core/service/modal.service.js"></script>
+        <script src="app/common/src/core/service/session.service.js"></script>
+        <script src="app/common/src/core/service/storage.service.js"></script>
+        <script src="app/common/src/core/service/toast.service.js"></script>
+        <script src="app/common/src/core/service/upload.service.js"></script>
+        <script src="app/common/src/core/service/util.service.js"></script>
+        <script src="app/common/src/core/widget/error/error-messages.component.js"></script>
+        <script src="app/common/src/core/widget/file-upload/file-upload.js"></script>
+
+        <!-- Import du common.da -->
+        <script src="app/common/src/da/da.js"></script>
+        <script src="app/common/src/da/data-access/course.da.js"></script>
+        <script src="app/common/src/da/data-access/resource.da.js"></script>
+
+        <!--Application -->
+        <script src="app/app.module.js"></script>
+        <!-- Core -->
+        <script src="app/core/core.module.js"></script>
+        <script src="app/core/core.route.js"></script>
+        <script src="app/core/core.config.js"></script>
+        <script src="app/core/core.constant.js"></script>
+        <script src="app/core/admin.controller.js"></script>
+        <!-- Layout -->
+        <script src="app/core/layout/header.controller.js"></script>
+        <!-- Shared service -->
+        <script src="app/core/shared-service/analytic.service.js"></script>
+        <script src="app/core/shared-service/course.service.js"></script>
+        <script src="app/core/shared-service/statistic.service.js"></script>
+        <script src="app/core/shared-service/user.service.js"></script>
+        <script src="app/core/shared-service/util.ext.service.js"></script>
+        <!-- Data Access -->
+        <script src="app/core/data-access/analytic.da.js"></script>
+        <script src="app/core/data-access/group.da.js"></script>
+        <script src="app/core/data-access/payment.da.js"></script>
+        <script src="app/core/data-access/report.da.js"></script>
+        <script src="app/core/data-access/user-admin.da.js"></script>
+        <!-- Filters -->
+        <script src="app/core/filter/duration.filter.js"></script>
+        <!-- Modal -->
+        <script src="app/core/modal/report-modal.controller.js"></script>
+        <!-- Component -->
+        <script src="app/core/component/progress-bar.js"></script>
+
+        <!-- Module de login : artips.admin.login -->
+        <script src="app/login/login.module.js"></script>
+        <script src="app/login/login.route.js"></script>
+        <script src="app/login/login.controller.js"></script>
+
+        <!-- Module utilisateur : artips.admin.users -->
+        <script src="app/users/users.module.js"></script>
+        <script src="app/users/users.route.js"></script>
+        <script src="app/users/users.controller.js"></script>
+        <script src="app/users/consult-user.controller.js"></script>
+        <script src="app/users/modal/create-user-modal.controller.js"></script>
+        <script src="app/users/component/roles-selector.js"></script>
+
+        <!-- Module statistique : artips.admin.analytic -->
+        <script src="app/analytic/analytic.module.js"></script>
+        <script src="app/analytic/analytic.route.js"></script>
+        <script src="app/analytic/analytic-global.controller.js"></script>
+        <script src="app/analytic/component/analytic-selector.js"></script>
+        <script src="app/analytic/component/grid-data.js"></script>
+        <script src="app/analytic/component/bar-chart.js"></script>
+        <script src="app/analytic/component/pie-chart.js"></script>
+        <script src="app/analytic/component/doughnut-chart.js"></script>
+
+        <!-- Module clients : artips.admin.company -->
+        <script src="app/company/company.module.js"></script>
+        <script src="app/company/company.route.js"></script>
+        <script src="app/company/company-list.controller.js"></script>
+
+     </body>
+</html>

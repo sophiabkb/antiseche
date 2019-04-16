@@ -1,0 +1,37 @@
+<div>
+    <md-toolbar id="header" layout="row">
+        <div class="left-title" layout="col" layout-align="center center">
+            <h1 translate="core.short_title" class="uppercase"></h1>
+        </div>
+        <div class="action-toolbar" flex layout="row" layout-align="space-between center">
+            <!-- Navigation-->
+            <div class="nav-container" layout="row">
+                <md-button ng-if="headerVm.allow.company" ui-sref="admin.header.company.list" ng-class="{'active': headerVm.stateIncluded('admin.header.company')}" translate="core.navbar.company">
+                </md-button>
+                <md-button ui-sref="admin.header.analytic.global" ng-class="{'active': headerVm.stateIncluded('admin.header.analytic')}" translate="core.navbar.analytics">
+                </md-button>
+                <md-button ui-sref="admin.header.users.list" ng-class="{'active': headerVm.stateIncluded('admin.header.users')}" translate="core.navbar.users">
+                </md-button>
+            </div>
+            <!-- Sous base-->
+            <div class="base-container">
+                <span translate="core.navbar.base"></span>&nbsp;<span md-colors="{color:'primary'}" class="capitalize" ng-bind="headerVm.subBase || 'standard'"></span>
+            </div>
+            <!-- Déconnexion -->
+            <div class="logout-container">
+                <md-button ng-click="headerVm.logout()">
+                    <md-icon md-svg-src="assets/img/icon/ic_input_white_36px.svg"></md-icon><br>
+                    <span translate="core.navbar.logout"></span>
+                </md-button>
+            </div>
+        </div>
+    </md-toolbar>
+
+    <div class="loader-container">
+        <md-progress-linear ng-show="loading"  class="md-accent" md-mode="indeterminate"></md-progress-linear>
+    </div>
+
+    <div class="page-container">
+        <div ui-view style="height: 100%;"></div>
+    </div>
+</div>

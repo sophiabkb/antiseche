@@ -1,0 +1,135 @@
+<section class="user-list page">
+    <h2 translate="user.list.title"></h2>
+
+    <div layout-gt-sm="row">
+        <div class="legend-container">
+            <p translate="user.list.summary"></p>
+            <section>
+                <h3 translate="user.list.legend.title"></h3>
+                <ul class="reset-list">
+                    <li class="not-initialized" translate="user.list.legend.unstarted_course"></li>
+                    <li class="initialized" translate="user.list.legend.started_course"></li>
+                    <li><img src="assets/img/icon/unlimited-red.svg"/><span translate="user.list.legend.unlimited"></span></li>
+                </ul>
+            </section>
+            <section>
+                <h3 translate="user.list.url.title"></h3>
+                <ul class="reset-list">
+                    <li ng-bind-html="'user.list.url.dashboard' | translate:{'url': vm.platformUrl}"></li>
+                    <li ng-bind-html="'user.list.url.connexion' | translate:{'url': vm.platformUrl + '/login'}"></li>
+                </ul>
+            </section>
+        </div>
+
+        <div flex>
+            <md-card class="no-margin-tp">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline" translate="user.list.search.title"></span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <form name="vm.searchForm" novalidate layout="row" layout-align="start center">
+                        <!-- Email de recherche -->
+                        <md-input-container flex class="no-margin-tp" md-is-error="vm.loginForm.$submitted && vm.loginForm.email.$invalid">
+                            <label for="email" translate="common.field.email"></label>
+                            <input id="email" type="text" ng-model="vm.search.email"  name="email" required ng-minlength="3">
+                            <art-error-messages field="vm.loginForm.email" form="vm.loginForm" ng-show="vm.loginForm.$submitted" field-name="{{'common.field.id' | translate }}"></art-error-messages>
+                        </md-input-container>
+                        <!-- Annulation de la recherche -->
+                        <md-button class="md-raised input-btn" style="margin-top: -25px;" ng-click="vm.cancelSearch()">
+                            <md-icon md-svg-src="assets/img/icon/cross-grey.svg"></md-icon>
+                        </md-button>
+                        <!-- Bouton de recherche -->
+                        <md-button type="submit" class="md-raised md-primary input-btn" style="margin-top: -25px;" ng-click="vm.search()">
+                            Go
+                        </md-button>
+                    </form>
+                    <section class="legend-container">
+                        <h3 class="no-margin-tp" translate="user.list.search.legend.title"></h3>
+                        <ul class="reset-list font-thin">
+                            <li translate="user.list.search.legend.three_char"></li>
+                            <li translate="user.list.search.legend.max_users"></li>
+                            <li translate="user.list.search.legend.ignore_case"></li>
+                            <li translate="user.list.search.legend.content"></li>
+                        </ul>
+                    </section>
+                </md-card-content>
+            </md-card>
+        </div>
+    </div>
+
+    <div>
+        <p layout="row" layout-align="space-between center">
+            <span translate="user.list.grid.count" translate-values="{number: vm.totalUsers}"></span>
+            <md-button class="md-raised md-accent" ng-click="adminVm.goToAnchor('header');vm.openCreateModal($event)">
+                <md-icon aria-label="person_add" class="material-icons">
+                    person_add
+                </md-icon>
+                <span translate="common.btn.add"></span>
+            </md-button>
+        </p>
+        <md-card class="no-margin-lt">
+            <div ui-grid="vm.gridOptions" class="users-grid" ui-grid-infinite-scroll ui-grid-resize-columns>
+                <div class="loader-container" ng-hide="!vm.loadingData" >
+                    <md-progress-circular class="md-primary" md-mode="indeterminate"></md-progress-circular>
+                </div>
+            </div>
+        </md-card>
+    </div>
+
+    <div ng-if="headerVm.allow.batchUser" layout-gt-sm="row" layout-align="start start">
+        <!-- Carte d'import d'utilisateurs -->
+        <md-card flex-gt-sm="50" flex="100" class="no-margin-lt">
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline" translate="user.list.import.title"></span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <!-- Explication de l'import -->
+                <p ng-bind-html="'user.list.import.explanation' | translate"></p>
+                <p ng-show="vm.reportId">
+                    <span translate="user.list.import.showReport"></span>
+                    <a href ng-click="vm.openReport(vm.reportId, $event)">
+                        <span translate="user.list.import.report"></span>
+                        <md-icon class="good-to-know md-14">open_in_new</md-icon>
+                    </a>
+                </p>
+                <p ng-show="!vm.reportId">&nbsp;</p>
+                <!-- Formulaire d'upload -->
+                <form name="vm.importForm">
+                    <art-upload-file on-update-file="vm.selectImportFile(file)" option="{'maxSize': '5MB', 'accept': 'text/csv', dragOverClass:{accept:'accept-file', reject:'reject-file', delay:100}}" style="width:100%;"></art-upload-file>
+
+                    <p class="label-value">
+                        <span translate="common.label.file" class="capitalize label"></span> : <span class="font-thin" ng-bind="vm.importUserFile.name"></span>
+                    </p>
+                    <!-- Bouton d'import -->
+                    <md-button type="submit" class="md-raised md-accent full-width" ng-click="vm.importUser()" translate="user.list.import.btn" ng-disabled="vm.importForm.$invalid || !vm.importUserFile"></md-button>
+                </form>
+            </md-card-content>
+        </md-card>
+
+        <!-- Carte de suppression d'utilisateurs par liste d'UID -->
+        <md-card ng-if="headerVm.allow.batchUser" flex-gt-sm="50" flex="100" class="no-margin-lt">
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline" translate="user.list.delete.title"></span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <!-- Formulaire d'upload -->
+                <form name="vm.deleteForm">
+                    <art-upload-file on-update-file="vm.selectDeleteFile(file)" option="{'maxSize': '5MB', dragOverClass:{accept:'accept-file', reject:'reject-file', delay:100}}" style="width:100%;"></art-upload-file>
+
+                    <p class="label-value">
+                        <span translate="common.label.file" class="capitalize label"></span> : <span class="font-thin" ng-bind="vm.deleteUserFile.name"></span>
+                    </p>
+                    <!-- Bouton d'import -->
+                    <md-button type="submit" class="md-raised md-accent full-width" ng-click="vm.deleteUser()" translate="user.list.delete.btn" ng-disabled="vm.deleteForm.$invalid || !vm.deleteUserFile"></md-button>
+                </form>
+            </md-card-content>
+
+        </md-card>
+    </div>
+</section>
